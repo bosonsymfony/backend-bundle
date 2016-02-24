@@ -1,0 +1,75 @@
+/**
+ * Created by killer on 19/01/16.
+ */
+
+angular.module('app')
+        .run(
+                ['$rootScope',
+                    function ($rootScope) {
+
+                    }
+                ]
+        )
+        .config(
+                ['$stateProvider',
+                    function ($stateProvider) {
+
+                        //routes here
+                        $stateProvider
+                                .state('{{ app_name }}', {
+                                    abstract: true,
+                                    url: '/{{ app_name }}',
+                                    views: {
+                                        '': {
+                                            templateUrl: {{ "'{{ path('backend_layout')|raw }}'" }}
+                                        },
+                                        'aside': {
+                                            templateUrl: {{ "'{{ path('backend_aside')|raw }}'" }}
+                                        },
+                                        'content': {
+                                            templateUrl: {{ "'{{ path('backend_content')|raw }}'" }}
+                                        }
+                                    }
+                                })
+                                .state('{{ app_name }}.homepage', {
+                                    url: '/home',
+                                    templateUrl: {{ "'{{ asset('" }}{{ target_dir }}{{ "/adminApp/views/home.html')|raw }}'" }},
+                                    controller: '{{ app_name }}HomeCtrl',
+                                    data: {
+                                        title: '{{ bundle_base_name|capitalize }} Homepage'
+                                    },
+                                    resolve: load(
+                                            [
+                                                {
+                                                    name: 'hljs',
+                                                    files: [
+                                                        {{ "'{{ asset('bundles/backend/lib/highlight/highlight.pack.js')|raw }}'" }},
+                                                        {{ "'{{ asset('bundles/backend/lib/highlight/styles/androidstudio.css')|raw }}'" }},
+                                                        {{ "'{{ asset('bundles/backend/node_modules/angular-highlightjs/build/angular-highlightjs.js')|raw }}'" }}
+                                                    ]
+                                                },
+                                                {
+                                                    files: [
+                                                        {{ "'{{ asset('" }}{{ target_dir }}{{ "/adminApp/services/" }}{{ app_name }}{{ "HomeSvc.js')|raw }}'" }},
+                                                        {{ "'{{ asset('" }}{{ target_dir }}{{ "/adminApp/filters/" }}{{ app_name }}{{ "HomeFilter.js')|raw }}'" }},
+                                                        {{ "'{{ asset('" }}{{ target_dir }}{{ "/adminApp/directives/" }}{{ app_name }}{{ "HomeDirective.js')|raw }}'" }},
+                                                        {{ "'{{ asset('" }}{{ target_dir }}{{ "/adminApp/controllers/" }}{{ app_name }}{{ "HomeCtrl.js')|raw }}'" }}
+                                                    ]
+                                                }
+                                            ]
+                                    )
+                                });
+
+
+                        function load(src) {
+                            return {
+                                deps: ['$ocLazyLoad',
+                                    function ($ocLazyLoad) {
+                                        return $ocLazyLoad.load(src);
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+        );

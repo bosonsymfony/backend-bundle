@@ -1,0 +1,27 @@
+
+/**
+ * {{ bundle }}/Resources/public/adminApp/services/{{ app_name }}HomeSvc.js
+ */
+angular.module('app')
+        .service('{{ app_name }}HomeSvc', [
+                    function () {
+                        var message = '';
+
+                        function setMessage(newMessage) {
+                            message = newMessage;
+                        }
+
+                        function getMessage() {
+                            return message;
+                        }
+
+                        return {
+                            setMessage: setMessage,
+                            getMessage: getMessage,
+                            $get: function () {
+
+                            }
+                        }
+                    }
+                ]
+        );

@@ -1,0 +1,27 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Lists all {{ entity }} entities.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/", name="{{ route_name_prefix }}", options={"expose"=true})
+     * @Method("GET")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function indexAction(Request $request)
+{% endblock method_definition %}
+    {
+        $filter = $request->get('filter', "");
+        $limit = $request->get('limit', 5);
+        $page = $request->get('page', 1);
+        $order = $request->get('order', "id");
+{% block method_return %}
+        return new Response($this->serialize($this->PaginateResults($filter, $page, $limit, $order)), 200, array(
+            'content-type' => 'application/json'
+        ));
+{% endblock method_return %}
+    }

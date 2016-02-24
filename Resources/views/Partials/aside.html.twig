@@ -1,0 +1,68 @@
+{% macro recursiveSections(children) %}
+    {% for child in children %}
+        {% if child.type == 'toggle' %}
+            <li ng-class="{active:$state.includes('{{ child.includes }}')}">
+                <a md-ink-ripple>
+                <span class="pull-right text-muted">
+                    <i class="fa fa-caret-down"></i>
+                </span>
+                <i class="icon i-20 {{ child.icon }}"></i>
+                <span class="font-normal">{{ child.title }}</span>
+                </a>
+                {% if child.children is defined and child.children|length %}
+                    <ul class="nav nav-sub">
+                        {{ _self.recursiveSections(child.children) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% elseif child.type == 'link' %}
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="{{ child.state }}">{{ child.title }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+<md-toolbar class="md-whiteframe-z1">
+    <div class="md-toolbar-tools">
+        {#<i class="fa fa-apple" style="font-size: 36px"></i>#}
+        <img src="{{ asset('bundles/backend/img/logo/mini-logo-w.png') }}" style="width: 38px; height: 30px">
+        <span class="app-title" ng-bind="$appName">
+        </span>
+    </div>
+</md-toolbar>
+<md-content flex="">
+    <nav ui-nav>
+        <ul class="nav">
+            <li class="nav-header m-v-sm hidden-folded">
+                Options
+            </li>
+
+            <li ng-class="{active:$state.includes('app')}">
+                <a md-ink-ripple>
+                <span class="pull-right text-muted">
+                    <i class="fa fa-caret-down"></i>
+                </span>
+                <i class="icon i-20 mdi-action-settings"></i>
+                <span class="font-normal">Configuration</span>
+                </a>
+                <ul class="nav nav-sub">
+                    <li ui-sref-active="active">
+                        <a md-ink-ripple ui-sref="app.bundles">Enabled Bundles</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a md-ink-ripple ui-sref="app.routes">Routing</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a md-ink-ripple ui-sref="app.database">Database</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a md-ink-ripple ui-sref="app.commands">Commands</a>
+                    </li>
+                </ul>
+            </li>
+
+            {{ _self.recursiveSections(menu) }}
+        </ul>
+    </nav>
+</md-content>

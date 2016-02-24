@@ -1,0 +1,12 @@
+config_route: {{ bundle_base_name }}_app_config
+menu:
+    {{ app_name }}:
+        title: {{ app_name|capitalize }}
+        type: toggle
+        icon: mdi mdi-view-quilt
+        includes: {{ app_name }}
+        children:
+            home:
+                title: {{ app_name|capitalize }} Homepage
+                type: link
+                state: {{ app_name }}.homepage

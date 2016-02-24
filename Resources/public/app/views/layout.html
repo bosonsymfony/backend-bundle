@@ -1,0 +1,14 @@
+<!-- aside -->
+<md-sidenav class="app-aside md-sidenav-left" ui-view="aside@"
+            md-component-id="app-aside"
+            md-is-locked-open="$mdMedia('gt-sm') && !$state.current.data.folded"
+            layout="column">
+</md-sidenav>
+<!-- /aside -->
+
+
+<!-- content -->
+<div id="content" class="" role="main" ui-view="content@" layout="column" flex="">
+</div>
+<!-- /content -->
+

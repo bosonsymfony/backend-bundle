@@ -1,0 +1,62 @@
+<div class="md-panel md-whiteframe-2dp" layout="column">
+    <!-- Toolbar -->
+    <md-toolbar class="md-panel-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>Example</h3>
+            <span flex=""></span>
+            <md-button class="md-icon-button" ng-click="showSource = !showSource">
+                <md-tooltip md-direction="left">
+                    View code
+                </md-tooltip>
+                <i class="fa fa-code i-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <!-- Tabs -->
+    <md-tabs md-dynamic-height ng-show="showSource">
+        <!-- home.html -->
+        <md-tab label="home.html">
+            <md-content>
+                <hljs lang="html">
+                    {{ include('angularApp/views/include.html.twig') }}
+                </hljs>
+            </md-content>
+        </md-tab>
+        <!-- {{ app_name }}.home.ctrl.js -->
+        <md-tab label="{{ app_name }}.home.ctrl.js">
+            <md-content>
+                <hljs lang="javascript">
+                    {{ include('angularApp/js/homeCtrl.js.twig') }}
+                </hljs>
+            </md-content>
+        </md-tab>
+        <!-- {{ app_name }}.home.directive.js -->
+        <md-tab label="{{ app_name }}.home.directive.js">
+            <md-content>
+                <hljs lang="javascript">
+                    {{ include('angularApp/js/homeDirective.js.twig') }}
+                </hljs>
+            </md-content>
+        </md-tab>
+        <!-- {{ app_name }}.home.filter.js -->
+        <md-tab label="{{ app_name }}.home.filter.js">
+            <md-content>
+                <hljs lang="javascript">
+                    {{ include('angularApp/js/homeFilter.js.twig') }}
+                </hljs>
+            </md-content>
+        </md-tab>
+        <!-- {{ app_name }}.home.svc.js -->
+        <md-tab label="{{ app_name }}.home.svc.js">
+            <md-content>
+                <hljs lang="javascript">
+                    {{ include('angularApp/js/homeSvc.js.twig') }}
+                </hljs>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+    <div layout="column" style="background: white; padding: 0 16px">
+        {{ include('angularApp/views/include.html.twig') }}
+    </div>
+</div>
+

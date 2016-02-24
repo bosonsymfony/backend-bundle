@@ -1,0 +1,20 @@
+<?php
+
+{% block use_statements %}
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+{% endblock use_statements %}
+
+{% block definition %}
+$collection = new RouteCollection();
+{% endblock definition %}
+
+{% block body %}
+$collection->add('{{ bundle_base_name }}_app_config', new Route('/{{ bundle_base_name }}/admin/scripts/config.{{ app_name }}.js', array(
+    '_controller' => '{{ bundle }}:{{ controller }}:getApp',
+)));
+{% endblock body %}
+
+{% block return %}
+return $collection;
+{% endblock return %}

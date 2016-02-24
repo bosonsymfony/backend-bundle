@@ -1,0 +1,46 @@
+<div class="md-panel md-whiteframe-2dp" layout="column">
+    <!-- Toolbar -->
+    <md-toolbar class="md-panel-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Routes
+                <small ng-bind="'('+routes.length+')'"></small>
+            </h3>
+            <span flex=""></span>
+            <md-button class="md-icon-button">
+                <md-tooltip md-direction="left">
+                    Options
+                </md-tooltip>
+                <i class="mdi mdi-settings i-24"></i>
+
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-table-container class="md-panel-content">
+        <table md-table="" md-progress="promise">
+            <thead md-head="" data-md-order="query.order" data-md-on-reorder="onReorder">
+            <tr md-row="">
+                <th md-column="" data-md-order-by="name">Name</th>
+                <th md-column="" data-md-order-by="path">Path</th>
+                <th md-column="" data-md-order-by="controller">Controller</th>
+                <th md-column="">Methods</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row
+                ng-repeat="route in routes|orderBy:query.order|limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell>
+                    <strong ng-bind="route.name"></strong>
+                </td>
+                <td md-cell ng-bind="route.path"></td>
+                <td md-cell ng-bind="route.controller"></td>
+                <td md-cell ng-bind="route.methods|json"></td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{routes.length}}" md-page-select>
+    </md-table-pagination>
+</div>

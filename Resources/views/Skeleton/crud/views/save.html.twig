@@ -1,0 +1,22 @@
+{% form_theme form 'BackendBundle:Form:material_layout.html.twig' %}
+<md-dialog>
+    <md-toolbar class="md-panel-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Nuevo(a) {{ entity }}
+            </h3>
+            <span flex=""></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i class="mdi mdi-close i-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+        {{ form(form) }}
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button class="md-primary md-raised" ng-click="accept(form)">Aceptar</md-button>
+        <md-button class="md-raised" ng-click="apply(form)">Aplicar</md-button>
+        <md-button class="md-primary" ng-click="cancel()">Cancelar</md-button>
+    </div>
+</md-dialog>

@@ -1,0 +1,149 @@
+/**
+ * {{ bundle }}/Resources/public/adminApp/controllers/{{ entity }}/{{ filename }}Ctrl.js
+ */
+angular.module('app')
+        .controller('{{ filename }}Ctrl',
+                ['$scope', '{{ filename }}Svc', '$mdDialog',
+                    function ($scope, {{ filename }}Svc, $mdDialog) {
+
+                        var bookmark;
+
+                        $scope.selected = [];
+
+                        $scope.filter = {
+                            options: {
+                                debounce: 500
+                            }
+                        };
+
+                        $scope.query = {
+                            filter: '',
+                            limit: '5',
+                            order: 'id',
+                            page: 1
+                        };
+
+                        function getEntities(query) {
+                            $scope.promise = {{ filename }}Svc.entities.get(query || $scope.query, success).$promise;
+                        }
+
+                        function success(entities) {
+                            $scope.entities = entities;
+                            $scope.selected = [];
+                        }
+
+                        $scope.onPaginate = function (page, limit) {
+                            getEntities(angular.extend({}, $scope.query, {page: page, limit: limit}));
+                        };
+
+                        $scope.onReorder = function (order) {
+                            getEntities(angular.extend({}, $scope.query, {order: order}));
+                        };
+
+                        $scope.removeFilter = function () {
+                            $scope.filter.show = false;
+                            $scope.query.filter = '';
+
+                            if ($scope.filter.form.$dirty) {
+                                $scope.filter.form.$setPristine();
+                            }
+                        };
+
+                        $scope.$watch('query.filter', function (newValue, oldValue) {
+                            if (!oldValue) {
+                                bookmark = $scope.query.page;
+                            }
+
+                            if (newValue !== oldValue) {
+                                $scope.query.page = 1;
+                            }
+
+                            if (!newValue) {
+                                $scope.query.page = bookmark;
+                            }
+
+                            getEntities();
+                        });
+
+                        $scope.deleteSelected = function (event) {
+                            $mdDialog.show({
+                                clickOutsideToClose: true,
+                                controller: '{{ filename }}DeleteCtrl',
+                                focusOnOpen: false,
+                                targetEvent: event,
+                                locals: {
+                                    entities: $scope.selected
+                                },
+                                templateUrl: $scope.$urlAssets + 'bundles/{{ target_dir }}/adminApp/views/{{ entity }}/delete-dialog.html'
+                            }).then(getEntities);
+                        };
+
+                        $scope.addEntity = function (event) {
+                            $mdDialog.show({
+                                clickOutsideToClose: true,
+                                controller: '{{ filename }}CreateCtrl',
+                                focusOnOpen: false,
+                                targetEvent: event,
+                                templateUrl: $scope.$urlAssets + 'bundles/{{ target_dir }}/adminApp/views/{{ entity }}/save-dialog.html'
+                            }).then(getEntities);
+                        };
+                    }
+                ]
+        )
+        .controller('{{ filename }}DeleteCtrl',
+                ['$scope', '$mdDialog', 'entities', '$q', '{{ filename }}Svc',
+                    function ($scope, $mdDialog, entities, $q, {{ filename }}Svc) {
+
+                        $scope.cancel = $mdDialog.cancel;
+
+                        function deleteEntity(entity, index) {
+                            var deferred = {{ filename }}Svc.entities.remove({id: entity.id});
+
+                            deferred.$promise.then(function () {
+                                entities.splice(index, 1);
+                            });
+
+                            return deferred.$promise;
+                        }
+
+                        function onComplete() {
+                            $mdDialog.hide();
+                        }
+
+                        $scope.delete = function () {
+                            $q.all(entities.forEach(deleteEntity)).then(onComplete);
+                        }
+                    }
+                ]
+        )
+        .controller('{{ filename }}CreateCtrl',
+                ['$scope', '$mdDialog', '{{ filename }}Svc',
+                    function ($scope, $mdDialog, {{ filename }}Svc) {
+
+                        $scope.cancel = $mdDialog.cancel;
+
+                        function success(entity) {
+                            $mdDialog.hide(entity);
+                        }
+
+                        function addEntity(form) {
+                            {#$scope.form.$setSubmitted();#}
+
+                            if (form.$valid) {
+                                {{ filename }}Svc.entities.save({dessert: $scope.dessert});
+                            }
+                        }
+
+                        $scope.accept = function (form) {
+                            addEntity(form);
+                            $mdDialog.hide(entity);
+                        };
+
+                        $scope.apply = function (form) {
+                            addEntity(form);
+                        };
+
+
+                    }
+                ]
+        );

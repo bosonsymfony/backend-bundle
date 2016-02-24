@@ -1,0 +1,14 @@
+services:
+#    backend.example:
+#        class: UCI\Boson\BackendBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+    backend.twig_extension:
+        class: UCI\Boson\BackendBundle\Twig\BackendExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    backend.angular_crud_generator:
+        class: UCI\Boson\BackendBundle\Generator\AngularCrudGenerator
+        arguments: ["@doctrine.orm.entity_manager","@form.factory","@filesystem","@templating"]

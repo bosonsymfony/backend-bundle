@@ -1,0 +1,17 @@
+
+/**
+ * {{ bundle }}/Resources/public/adminApp/filters/{{ app_name }}HomeFilter.js
+ */
+angular.module('app')
+        .filter('{{ app_name }}HomeFilter',
+                function () {
+                    return function (input) {
+                        input = input || '';
+                        var out = "";
+                        for (var i = 0; i < input.length; i++) {
+                            out = input.charAt(i) + out;
+                        }
+                        return out;
+                    }
+                }
+        );

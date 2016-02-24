@@ -1,0 +1,28 @@
+<?php
+
+namespace UCI\Boson\BackendBundle\Doctrine\ORM\Query\AST\Platform\Functions\Mysql;
+
+use Doctrine\ORM\Query\AST\Node;
+use Doctrine\ORM\Query\SqlWalker;
+use UCI\Boson\BackendBundle\Doctrine\ORM\Query\AST\Platform\Functions\PlatformFunctionNode;
+use UCI\Boson\BackendBundle\Doctrine\ORM\Query\AST\Functions\Numeric\Pow as Base;
+
+class Pow extends PlatformFunctionNode
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getSql(SqlWalker $sqlWalker)
+    {
+        /** @var Node $value */
+        $value = $this->parameters[Base::VALUE_KEY];
+        /** @var Node $power */
+        $power = $this->parameters[Base::POWER_KEY];
+
+        return 'POW('
+            . $this->getExpressionValue($value, $sqlWalker)
+            . ', '
+            . $this->getExpressionValue($power, $sqlWalker)
+        . ')';
+    }
+}

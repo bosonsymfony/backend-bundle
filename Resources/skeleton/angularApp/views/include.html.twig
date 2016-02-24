@@ -1,0 +1,21 @@
+
+<!-- {{ bundle }}/Resources/public/adminApp/views/home.html -->
+
+<!-- Load variable 'message' from '{{ app_name }}HomeCtrl' controller -->
+<div class="">
+    <h3>{{ '{{ message }}' }}</h3>
+</div>
+
+<!-- Apply '{{ app_name }}HomeFilter' filter to 'message' variable-->
+<div class="">
+    <h2>Filter example:</h2>
+
+    <h3>{{ '{{ message|' }}{{ app_name }}HomeFilter{{ '}}' }}</h3>
+</div>
+
+<!-- Using directive '{{ app_name }}HomeDirective' -->
+<div class="">
+    <h2>Directive example:</h2>
+
+    <h3 {{ app_name }}-home-directive="">{{ '{{ message|' }}{{ app_name }}HomeFilter{{ '}}' }}</h3>
+</div>

@@ -1,0 +1,55 @@
+/**
+ * Created by killer on 19/01/16.
+ */
+
+angular.module('app')
+        .constant('MODULES',
+                [
+                    {
+                        name: 'app.bundles',
+                        files: [
+                            '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
+                            '{{ asset('bundles/backend/app/controllers/configuration/BundlesCtrl.js')|raw }}'
+                        ]
+                    },
+                    {
+                        name: 'app.routes',
+                        files: [
+                            '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
+                            '{{ asset('bundles/backend/app/controllers/configuration/RoutesCtrl.js')|raw }}'
+                        ]
+                    },
+                    {
+                        name: 'app.database',
+                        files: [
+                            '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
+                            '{{ asset('bundles/backend/app/controllers/configuration/DatabaseCtrl.js')|raw }}'
+                        ]
+                    },
+                    {
+                        name: 'app.commands',
+                        files: [
+                            '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
+                            '{{ asset('bundles/backend/app/controllers/configuration/CommandsCtrl.js')|raw }}'
+                        ]
+                    }
+                ]
+        )
+        .config(
+                ['$ocLazyLoadProvider', 'MODULES', 'cfpLoadingBarProvider', '$mdThemingProvider',
+                    function ($ocLazyLoadProvider, MODULES, cfpLoadingBarProvider, $mdThemingProvider) {
+
+                        cfpLoadingBarProvider.includeSpinner = false;
+
+                        $ocLazyLoadProvider.config({
+                            debug: true,
+                            events: false,
+                            modules: MODULES
+                        });
+
+                        $mdThemingProvider.theme('docs-dark', 'default')
+                                .primaryPalette('yellow')
+                                .dark();
+                    }
+                ]
+        );

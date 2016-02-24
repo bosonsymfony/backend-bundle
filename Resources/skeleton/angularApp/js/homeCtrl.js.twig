@@ -1,0 +1,16 @@
+
+/**
+ * {{ bundle }}/Resources/public/adminApp/controllers/{{ app_name }}HomeCtrl.js
+ */
+angular.module('app')
+        .controller('{{ app_name }}HomeCtrl',
+                ['$scope', '{{ app_name }}HomeSvc',
+                    function ($scope, {{ app_name }}HomeSvc) {
+
+                        $scope.showSource = false;
+                        {{ app_name }}HomeSvc.setMessage('Welcome to the {{ bundle }} example configuration.');
+                        $scope.message = {{ app_name }}HomeSvc.getMessage();
+
+                    }
+                ]
+        );

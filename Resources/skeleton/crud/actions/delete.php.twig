@@ -1,0 +1,33 @@
+    /**
+{% block phpdoc_method_header %}
+     * Deletes a {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/{id}", name="{{ route_name_prefix }}_delete", options={"expose"=true})
+     * @Method("DELETE")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function deleteAction($id)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $entity = $em->getRepository('{{ bundle }}:{{ entity }}')->find($id);
+
+        if (!$entity) {
+            return new Response('Unable to find {{ entity }} entity.', Response::HTTP_NOT_FOUND);
+        }
+
+        $em->remove($entity);
+        $em->flush();
+{% endblock method_body %}
+
+{% block method_return %}
+        return new Response("The {{ entity }} with id '$id' was deleted successfully.");
+{% endblock method_return %}
+    }

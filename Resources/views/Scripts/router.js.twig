@@ -1,0 +1,108 @@
+/**
+ * Created by killer on 19/01/16.
+ */
+
+angular.module('app')
+        .run(
+                ['$rootScope', '$state', '$stateParams', 'cfpLoadingBar',
+                    function ($rootScope, $state, $stateParams, cfpLoadingBar) {
+                        $rootScope.$state = $state;
+                        $rootScope.$stateParams = $stateParams;
+                        $rootScope.$urlAssets = '{{ asset('')|raw }}';
+                        $rootScope.$appName = 'Boson';
+
+                        $rootScope.$on('$stateChangeStart',
+                                function (event, toState, toParams, fromState, fromParams) {
+                                    cfpLoadingBar.start();
+                                }
+                        );
+
+                        $rootScope.$on('$stateChangeSuccess',
+                                function (event, toState, toParams, fromState, fromParams) {
+                                    cfpLoadingBar.complete();
+                                }
+                        );
+
+                        $rootScope.createNotify = function () {
+
+                        }
+                    }
+                ]
+        )
+        .config(
+                ['$stateProvider', '$urlRouterProvider',
+                    function ($stateProvider, $urlRouterProvider) {
+
+                        $urlRouterProvider
+                                .otherwise('app/bundles');
+
+                        //routes here
+                        $stateProvider
+                                .state('app', {
+                                    abstract: true,
+                                    url: '/app',
+                                    views: {
+                                        '': {
+                                            templateUrl: '{{ path('backend_layout')|raw }}'
+                                        },
+                                        'aside': {
+                                            templateUrl: '{{ path('backend_aside')|raw }}'
+                                        },
+                                        'content': {
+                                            templateUrl: '{{ path('backend_content')|raw }}'
+                                        }
+                                    }
+                                })
+                                .state('app.bundles', {
+                                    url: '/bundles',
+                                    templateUrl: '{{ asset('bundles/backend/app/views/pages/config.bundles.html')|raw }}',
+                                    data: {
+                                        title: 'Enabled Bundles',
+                                        {#folded: true#}
+                                    },
+                                    controller: 'BundlesCtrl',
+                                    resolve: load('app.bundles')
+                                })
+                                .state('app.routes', {
+                                    url: '/routes',
+                                    templateUrl: '{{ asset('bundles/backend/app/views/pages/config.routes.html')|raw }}',
+                                    data: {
+                                        title: 'Routing',
+                                        {#folded: true#}
+                                    },
+                                    controller: 'RoutesCtrl',
+                                    resolve: load('app.routes')
+                                })
+                                .state('app.database', {
+                                    url: '/database',
+                                    templateUrl: '{{ asset('bundles/backend/app/views/pages/config.database.html')|raw }}',
+                                    data: {
+                                        title: 'Database',
+                                        {#folded: true#}
+                                    },
+                                    controller: 'DatabaseCtrl',
+                                    resolve: load('app.database')
+                                })
+                                .state('app.commands', {
+                                    url: '/commands',
+                                    templateUrl: '{{ asset('bundles/backend/app/views/pages/config.commands.html')|raw }}',
+                                    data: {
+                                        title: 'Commands',
+                                        {#folded: true#}
+                                    },
+                                    controller: 'CommandsCtrl',
+                                    resolve: load('app.commands')
+                                });
+
+                        function load(src) {
+                            return {
+                                deps: ['$ocLazyLoad',
+                                    function ($ocLazyLoad) {
+                                        return $ocLazyLoad.load(src);
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+        );

@@ -1,0 +1,13 @@
+/**
+ * {{ bundle }}/Resources/public/adminApp/controllers/{{ entity }}/{{ filename }}Svc.js
+ */
+angular.module('app')
+        .factory('{{ filename }}Svc',
+                ['$resource',
+                    function ($resource) {
+                        return {
+                            entities: $resource(Routing.generate('{{ route_name_prefix }}', {}, true) + ':id')
+                        };
+                    }
+                ]
+        );

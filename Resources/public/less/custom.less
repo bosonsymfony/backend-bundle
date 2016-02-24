@@ -1,0 +1,78 @@
+.app-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 16px;
+}
+
+#loading-bar {
+  .bar {
+    height: 3px;
+  }
+}
+
+.toggle-menu.active {
+  display: block !important;
+}
+
+.md-panel {
+  border-radius: 4px;
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 0;
+  transition: 0.02s padding cubic-bezier(0.35, 0, 0.25, 1);
+  -moz-transition: 0.02s padding cubic-bezier(0.35, 0, 0.25, 1);
+  -webkit-transition: 0.02s padding cubic-bezier(0.35, 0, 0.25, 1);
+}
+
+.md-panel-toolbar {
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.md-panel {
+  /* when hiding the picture */
+  md-tabs.ng-hide-add {
+    animation: 1s flipOutX ease;
+  }
+
+  /* when showing the picture */
+  md-tabs.ng-hide-remove {
+    animation: 1s flipInX ease;
+  }
+
+  > .md-panel-content {
+    background: white;
+  }
+
+  > md-tabs {
+    border-radius: 0;
+
+    md-content {
+      background: white;
+      max-height: 300px;
+      > hljs {
+        min-height: 100%;
+        > pre {
+          min-height: 100%;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  > md-table-pagination {
+    background-color: white;
+  }
+}
+
+md-input-container {
+  > .md-errors-spacer {
+    display: none;
+  }
+}
+
+md-dialog {
+  .md-actions {
+    border-top: 1px rgba(0, 0, 0, .12) solid;
+  }
+}

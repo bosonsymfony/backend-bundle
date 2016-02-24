@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }}\Validator\Constraints;
+
+use Symfony\Component\Validator\Constraint;
+
+/**
+ * @Annotation
+ */
+class {{ validator_name }} extends Constraint
+{
+    public $message = 'The value "%value%" is wrong.';
+
+    public function validatedBy()
+    {
+        return get_class($this) . 'Validator';
+    }
+
+    public function getTargets()
+    {
+        return array(self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT);
+    }
+}

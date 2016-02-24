@@ -1,0 +1,43 @@
+<div class="md-panel md-whiteframe-2dp" layout="column">
+    <!-- Toolbar -->
+    <md-toolbar class="md-panel-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Entities
+                <small ng-bind="'('+entities.length+')'"></small>
+            </h3>
+            <span flex=""></span>
+            <md-button class="md-icon-button">
+                <md-tooltip md-direction="left">
+                    Options
+                </md-tooltip>
+                <i class="mdi mdi-settings i-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-table-container class="md-panel-content">
+        <table md-table="" md-progress="promise">
+            <thead md-head="" md-order="query.order" md-on-reorder="onReorder">
+            <tr md-row="">
+                <th md-column="" md-order-by="class">Class</th>
+                <th md-column="">Field Names</th>
+                <!--<th md-column="" md-order-by="path">Path</th>-->
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row
+                ng-repeat="entity in entities|orderBy:query.order|limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell>
+                    <strong ng-bind="entity.class"></strong>
+                </td>
+                <td md-cell ng-bind="entity.field_names|json"></td>
+                <!--<td md-cell ng-bind="entity.path"></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{entities.length}}" md-page-select>
+    </md-table-pagination>
+</div>
