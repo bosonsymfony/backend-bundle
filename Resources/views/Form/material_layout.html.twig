@@ -242,8 +242,8 @@
 {%- block form_row -%}
     <md-input-container class="md-block" flex-gt-sm>
         {{ form_label(form) }}
-        {{ form_errors(form) }}
         {{ form_widget(form) }}
+        {{ form_errors(form) }}
     </md-input-container>
 {%- endblock form_row -%}
 
@@ -290,13 +290,10 @@
 {%- endblock form_enctype -%}
 
 {%- block form_errors -%}
-    {%- if errors|length > 0 -%}
-        <ul>
-            {%- for error in errors -%}
-                <li>{{ error.message }}</li>
-            {%- endfor -%}
-        </ul>
-    {%- endif -%}
+    {% set field_name = errors.form.config.name %}
+    <div ng-messages="errors.{{ field_name }}">
+        <div ng-repeat="message in errors.{{ field_name }}" ng-bind="message"></div>
+    </div>
 {%- endblock form_errors -%}
 
 {%- block form_rest -%}

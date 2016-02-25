@@ -177,7 +177,7 @@ class BackendController extends Controller
         $errors = array();
 
         if ($err = $this->childErrors($form)) {
-            $errors[] = $err;
+            $errors[$form->getName()] = $err;
         }
 
         foreach ($form->all() as $key => $child) {

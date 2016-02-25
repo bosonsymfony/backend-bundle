@@ -6,9 +6,12 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Sensio\Bundle\GeneratorBundle\Command\AutoComplete\EntitiesAutoCompleter;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCrudCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
@@ -73,6 +76,23 @@ class GenerateAngularCrudCommand extends GenerateDoctrineCrudCommand
         }
 
         $questionHelper->writeGeneratorSummary($output, $errors);
+
+        $cacheClear = true;
+
+        if ($input->isInteractive()) {
+            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to clear cache?', 'yes', '?'), true);
+            $cacheClear = $questionHelper->ask($input, $output, $question);
+        }
+
+        if ($cacheClear) {
+            $output->writeln('<info>Clearing cache...</info>');
+            try {
+                $this->clearCache();
+            } catch (\Exception $e) {
+                $output->writeln('<error>' . $e->getMessage() . '</error>');
+                $output->writeln('Please clear cache manually');
+            }
+        }
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -144,39 +164,22 @@ class GenerateAngularCrudCommand extends GenerateDoctrineCrudCommand
         return $this->getContainer()->get('backend.angular_crud_generator');
     }
 
-    /**
-     * @param ClassMetadata $metadata
-     * @return array
-     */
-    public function generateListFields(ClassMetadata $metadata)
+
+    protected function clearCache()
     {
-        $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
-        $result = array(
-            'fields' => $metadata->getFieldNames(),
-            'associations' => array()
-        );
+        $kernel = $this->getContainer()->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
 
-        $associations = $metadata->getAssociationNames();
+        $input = new ArrayInput(array(
+            'command' => 'cache:clear',
+            '--env' => $kernel->getEnvironment()
+        ));
+        // You can use NullOutput() if you don't need the output
+        $output = new BufferedOutput();
+        $application->doRun($input, $output);
 
-        foreach ($associations as $index => $association) {
-            $associationMetadata = $em->getClassMetadata($metadata->getAssociationTargetClass($association));
-            $result['associations'][$association] = array(
-                'fields' => $associationMetadata->fieldNames,
-                'associations' => array()
-            );
-        }
-
-        return $result;
+        // return the output, don't use if you used NullOutput()
+        $content = $output->fetch();
     }
-
-    /**
-     * @param ClassMetadata $metadata
-     * @return array
-     */
-    public function generateSearchFields(ClassMetadata $metadata)
-    {
-        return $metadata->fieldMappings;
-    }
-
-
 }

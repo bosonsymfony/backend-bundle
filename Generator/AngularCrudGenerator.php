@@ -16,6 +16,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 use UCI\Boson\BackendBundle\Command\Util;
 
 class AngularCrudGenerator extends Generator
@@ -91,6 +94,11 @@ class AngularCrudGenerator extends Generator
     protected $form;
 
     /**
+     * @var string
+     */
+    protected $state;
+
+    /**
      * AngularCrudGenerator constructor.
      * @param EntityManager $entityManager
      * @param FormFactory $formFactory
@@ -115,9 +123,8 @@ class AngularCrudGenerator extends Generator
         $this->routePrefix = $routePrefix;
         $this->routeNamePrefix = str_replace('/', '_', $routePrefix);
         $this->actions = array('index', 'show', 'new', 'edit', 'delete');
-        $this->fieldList = $this->generateListFields();
-        $this->searchField = $this->generateSearchFields();
-        $this->form = $this->generateCreateForm();
+
+        $this->initFields();
 
         if (count($this->metadata->identifier) != 1) {
             throw new \RuntimeException('The CRUD generator does not support entity classes with multiple or no primary keys.');
@@ -156,6 +163,9 @@ class AngularCrudGenerator extends Generator
 
         $this->generateTestClass();
         $this->generateConfiguration();
+
+        $this->updateBackendConfig();
+        $this->updateJsConfig();
     }
 
     /**
@@ -328,54 +338,87 @@ class AngularCrudGenerator extends Generator
     }
 
     /**
-     * @return array
+     * @return void
      */
-    protected function generateListFields()
-    {
-        $result = array(
-            'fields' => $this->metadata->getFieldNames(),
-            'associations' => array()
-        );
-
-        $associations = $this->metadata->getAssociationNames();
-
-        foreach ($associations as $index => $association) {
-            $associationMetadata = $this->entityManager->getClassMetadata($this->metadata->getAssociationTargetClass($association));
-            $result['associations'][$association] = array(
-                'fields' => $associationMetadata->fieldNames,
-                'associations' => array()
-            );
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return array
-     */
-    protected function generateSearchFields()
-    {
-        return $this->metadata->fieldMappings;
-    }
-
-    /**
-     * @return Form
-     */
-    protected function generateCreateForm()
+    protected function initFields()
     {
         $entityClass = $this->bundle->getNamespace() . '\\Entity\\' . $this->entity;
         $reflection = new \ReflectionClass($entityClass);
         $entity = $reflection->newInstance();
 
+        $propertyAccessor = new PropertyAccessor(false, true);
+
+        $fieldMappings = $this->metadata->fieldMappings;
         $form = $this->formFactory->createNamedBuilder(strtolower($this->bundle->getName()) . '_' . $this->routeNamePrefix, 'form', $entity);
 
-        foreach ($this->fieldList['fields'] as $index => $field) {
-            if ($field != 'id') {
-                $form->add($field);
+        $listFields = array(
+            'fields' => array(),
+            'associations' => array()
+        );
+
+        foreach ($fieldMappings as $index => $fieldMapping) {
+            if ($propertyAccessor->isReadable($entity, $index)) {
+                $listFields['fields'][] = $index;
+                if ($index != 'id') {
+                    $form->add($index);
+                }
             }
         }
 
-        return $form->getForm();
+        $associations = $this->metadata->getAssociationNames();
+
+        foreach ($associations as $index => $association) {
+            $associationMetadata = $this->entityManager->getClassMetadata($this->metadata->getAssociationTargetClass($association));
+            $listFields['associations'][$association] = array(
+                'fields' => $associationMetadata->fieldNames,
+                'associations' => array()
+            );
+        }
+
+        $this->fieldList = $listFields;
+        $this->searchField = $fieldMappings;
+        $this->form = $form->getForm();
+    }
+
+    protected function updateBackendConfig()
+    {
+        $configFile = $this->bundle->getPath() . '/Resources/config/backend.yml';
+        $yaml = new Parser();
+        $data = $yaml->parse(file_get_contents($configFile));
+
+        foreach ($data['menu'] as $key => $value) {
+            if ($value['type'] == 'toggle') {
+                if (!array_key_exists('children', $value)) {
+                    $data['menu'][$key]['children'] = array();
+                }
+                $data['menu'][$key]['children'][strtolower($this->entity)] = array(
+                    'title' => $this->entity,
+                    'type' => 'link',
+                    'state' => $value['includes'] . '.' . strtolower($this->entity)
+                );
+                $this->state = $value['includes'];
+                break;
+            }
+        }
+
+        $dumper = new Dumper();
+        file_put_contents($configFile, $dumper->dump($data, 5));
+    }
+
+    protected function updateJsConfig()
+    {
+        $file = $this->render('BackendBundle:Skeleton:crud/js/routeConfig.js.twig', array(
+            'actions' => $this->actions,
+            'route_prefix' => $this->routePrefix,
+            'route_name_prefix' => $this->routeNamePrefix,
+            'bundle' => $this->bundle->getName(),
+            'entity' => $this->entity,
+            'state' => $this->state,
+            'target_dir' => Util::createAppName($this->bundle->getName()),
+            'filename' => lcfirst($this->entity)
+        ));
+
+        print_r($file . "\n");
     }
 
 }

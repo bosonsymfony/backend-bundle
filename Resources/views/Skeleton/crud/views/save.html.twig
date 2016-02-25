@@ -15,8 +15,8 @@
         {{ form(form) }}
     </md-dialog-content>
     <div class="md-actions">
-        <md-button class="md-primary md-raised" ng-click="accept(form)">Aceptar</md-button>
-        <md-button class="md-raised" ng-click="apply(form)">Aplicar</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="!form.$valid" ng-click="accept(form)">Aceptar</md-button>
+        <md-button class="md-raised" ng-disabled="!form.$valid" ng-click="apply(form)">Aplicar</md-button>
         <md-button class="md-primary" ng-click="cancel()">Cancelar</md-button>
     </div>
 </md-dialog>

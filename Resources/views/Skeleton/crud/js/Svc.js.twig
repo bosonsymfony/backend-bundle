@@ -6,7 +6,7 @@ angular.module('app')
                 ['$resource',
                     function ($resource) {
                         return {
-                            entities: $resource(Routing.generate('{{ route_name_prefix }}', {}, true) + ':id')
+                            entities: $resource(Routing.generate('{{ route_name_prefix }}_create', {}, true) + ':id')
                         };
                     }
                 ]

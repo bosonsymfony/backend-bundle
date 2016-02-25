@@ -1,0 +1,18 @@
+.state('{{ state }}.{{ entity|lower }}', {
+    url: '/home',
+    templateUrl: {{ "'{{ asset('bundles/"}}{{ target_dir }}{{ "/adminApp/views/"}}{{ entity }}{{ "/list.html')|raw }}'" }},
+    controller: '{{ filename }}Ctrl',
+    data: {
+        title: '{{ entity }}'
+    },
+    resolve: load(
+            [
+                {
+                    files: [
+                        {{ "'{{ asset('bundles/" }}{{ target_dir }}{{ "/adminApp/controllers/" }}{{ entity }}{{ "/" }}{{ filename }}{{ "Ctrl.js')|raw }}'" }},
+                        {{ "'{{ asset('bundles/" }}{{ target_dir }}{{ "/adminApp/services/" }}{{ entity }}{{ "/" }}{{ filename }}{{ "Svc.js')|raw }}'" }}
+                    ]
+                }
+            ]
+    )
+})

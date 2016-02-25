@@ -126,24 +126,29 @@ angular.module('app')
                             $mdDialog.hide(entity);
                         }
 
-                        function addEntity(form) {
-                            {#$scope.form.$setSubmitted();#}
+                        function error(errors) {
+                            $scope.errors = errors.data;
+                            console.log($scope.errors);
+                        }
 
-                            if (form.$valid) {
-                                {{ filename }}Svc.entities.save({dessert: $scope.dessert});
+                        function addEntity() {
+
+                            if ($scope.form.$valid) {
+                                console.log($scope.entity);
+                                {{ filename }}Svc.entities.save($scope.entity, success, error);
+
                             }
                         }
 
-                        $scope.accept = function (form) {
-                            addEntity(form);
-                            $mdDialog.hide(entity);
+                        $scope.accept = function () {
+                            addEntity();
                         };
 
-                        $scope.apply = function (form) {
-                            addEntity(form);
+                        $scope.apply = function () {
+                            addEntity();
                         };
 
-
+                        $scope.errors = {};
                     }
                 ]
         );
