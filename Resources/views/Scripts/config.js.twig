@@ -32,6 +32,12 @@ angular.module('app')
                             '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
                             '{{ asset('bundles/backend/app/controllers/configuration/CommandsCtrl.js')|raw }}'
                         ]
+                    },
+                    {
+                        name: 'app.help',
+                        files: [
+                            '{{ asset('bundles/backend/app/controllers/help/HelpCtrl.js')|raw }}'
+                        ]
                     }
                 ]
         )

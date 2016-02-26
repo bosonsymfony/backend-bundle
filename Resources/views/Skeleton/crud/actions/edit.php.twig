@@ -50,10 +50,14 @@
     */
     private function createEditForm({{ entity_class }} $entity)
     {
-        $form = $this->createFormBuilder($entity);
+        $form = $this->get('form.factory')->createNamedBuilder('pruebabundle_facultad', 'form', $entity, array(
+            'csrf_protection' => false
+        ));
         foreach ($this->editFormFields as $index => $editFormField) {
             $form->add($editFormField);
         }
+
+        $form->setMethod('PUT');
 
         return $form->getForm();
     }

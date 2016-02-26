@@ -92,6 +92,16 @@ angular.module('app')
                                     },
                                     controller: 'CommandsCtrl',
                                     resolve: load('app.commands')
+                                })
+                                .state('app.help', {
+                                    url: '/help',
+                                    templateUrl: '{{ asset('bundles/backend/app/views/pages/help.html')|raw }}',
+                                    data: {
+                                        title: 'Help & FeedBack',
+                                        {#folded: true#}
+                                    },
+                                    controller: 'HelpCtrl',
+                                    resolve: load('app.help')
                                 });
 
                         function load(src) {

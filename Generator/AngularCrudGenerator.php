@@ -147,6 +147,9 @@ class AngularCrudGenerator extends Generator
         // Generate save dialog
         $this->generateSaveView($dir);
 
+        // Generate update dialog
+        $this->generateUpdateView($dir);
+
         // Generate ctrl
         $dir = sprintf('%s/Resources/public/adminApp/controllers/%s', $this->bundle->getPath(), str_replace('\\', '/', $this->entity));
         if (!file_exists($dir)) {
@@ -251,13 +254,24 @@ class AngularCrudGenerator extends Generator
         ));
     }
 
+    protected function generateUpdateView($dir)
+    {
+        $this->renderFile('BackendBundle:Skeleton:crud/views/update.html.twig', $dir . '/update-dialog.html', array(
+            'form' => $this->form->createView(),
+            'entity' => $this->entity
+        ));
+    }
+
     protected function generateCtrl($dir)
     {
+        $form = $this->form->createView();
         $this->renderFile('BackendBundle:Skeleton:crud/js/Ctrl.js.twig', $dir . '/' . lcfirst($this->entity) . 'Ctrl.js', array(
             'bundle' => $this->bundle->getName(),
             'target_dir' => Util::createAppName($this->bundle->getName()),
             'entity' => $this->entity,
-            'filename' => lcfirst($this->entity)
+            'filename' => lcfirst($this->entity),
+            'form' => $this->form->createView()->children,
+            'fields' => $this->fieldList['fields']
         ));
     }
 
@@ -349,7 +363,9 @@ class AngularCrudGenerator extends Generator
         $propertyAccessor = new PropertyAccessor(false, true);
 
         $fieldMappings = $this->metadata->fieldMappings;
-        $form = $this->formFactory->createNamedBuilder(strtolower($this->bundle->getName()) . '_' . $this->routeNamePrefix, 'form', $entity);
+        $form = $this->formFactory->createNamedBuilder(strtolower($this->bundle->getName()) . '_' . $this->routeNamePrefix, 'form', $entity,array(
+            'csrf_protection' => false
+        ));
 
         $listFields = array(
             'fields' => array(),

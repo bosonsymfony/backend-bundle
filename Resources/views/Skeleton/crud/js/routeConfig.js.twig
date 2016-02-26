@@ -1,5 +1,5 @@
 .state('{{ state }}.{{ entity|lower }}', {
-    url: '/home',
+    url: '/{{ entity|lower }}',
     templateUrl: {{ "'{{ asset('bundles/"}}{{ target_dir }}{{ "/adminApp/views/"}}{{ entity }}{{ "/list.html')|raw }}'" }},
     controller: '{{ filename }}Ctrl',
     data: {

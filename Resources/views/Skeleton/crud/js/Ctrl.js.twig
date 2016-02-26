@@ -87,6 +87,25 @@ angular.module('app')
                                 templateUrl: $scope.$urlAssets + 'bundles/{{ target_dir }}/adminApp/views/{{ entity }}/save-dialog.html'
                             }).then(getEntities);
                         };
+
+                        $scope.editEntity = function (event) {
+                            {{ filename }}Svc.entities.query({id: $scope.selected[0].id},
+                                    function (response) {
+                                        $mdDialog.show({
+                                            clickOutsideToClose: true,
+                                            controller: '{{ filename }}UpdateCtrl',
+                                            focusOnOpen: false,
+                                            targetEvent: event,
+                                            templateUrl: $scope.$urlAssets + 'bundles/{{ target_dir }}/adminApp/views/{{ entity }}/update-dialog.html',
+                                            locals: {
+                                                object: response
+                                            }
+                                        }).then(getEntities);
+                                    }, function (error) {
+                                        alert(error);
+                                    }
+                            );
+                        }
                     }
                 ]
         )
@@ -120,35 +139,88 @@ angular.module('app')
                 ['$scope', '$mdDialog', '{{ filename }}Svc',
                     function ($scope, $mdDialog, {{ filename }}Svc) {
 
-                        $scope.cancel = $mdDialog.cancel;
+                        var update = false;
 
-                        function success(entity) {
-                            $mdDialog.hide(entity);
+                        var hide = true;
+
+                        $scope.cancel = function () {
+                            if (update) {
+                                return $mdDialog.hide();
+                            } else {
+                                return $mdDialog.cancel();
+                            }
+                        };
+
+                        function success(response) {
+                            if (hide) {
+                                $mdDialog.hide();
+                            } else {
+                                update = true;
+                                clean();
+                            }
+                        }
+
+                        function clean() {
+                            $scope.entity = {};
                         }
 
                         function error(errors) {
                             $scope.errors = errors.data;
-                            console.log($scope.errors);
                         }
 
                         function addEntity() {
 
                             if ($scope.form.$valid) {
-                                console.log($scope.entity);
                                 {{ filename }}Svc.entities.save($scope.entity, success, error);
-
                             }
                         }
 
                         $scope.accept = function () {
+                            hide = true;
                             addEntity();
                         };
 
                         $scope.apply = function () {
+                            hide = false;
                             addEntity();
                         };
 
                         $scope.errors = {};
+                    }
+                ]
+        )
+        .controller('{{ filename }}UpdateCtrl',
+                ['$scope', '$mdDialog', '{{ filename }}Svc', 'object',
+                    function ($scope, $mdDialog, {{ filename }}Svc, object) {
+
+                        $scope.entity = {
+{% for key,field in form %}
+                            '{{ field.vars.full_name|raw }}': object.{{ key|underscore }},
+{% endfor %}
+                        };
+
+
+                        $scope.cancel = function () {
+                            return $mdDialog.cancel();
+                        };
+
+                        function success(response) {
+                            $mdDialog.hide();
+                        }
+
+                        function error(errors) {
+                            $scope.errors = errors.data;
+                        }
+
+                        function updateEntity() {
+                            if ($scope.form.$valid) {
+                                {{ filename }}Svc.entities.save({id: object.id}, angular.extend({}, $scope.entity, {_method: 'PUT'}), success, error);
+                            }
+                        }
+
+                        $scope.accept = function () {
+                            updateEntity();
+                        };
                     }
                 ]
         );

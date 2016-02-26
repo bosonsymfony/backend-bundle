@@ -40,7 +40,7 @@
         <div class="md-toolbar-tools">
             <div>{{ '{{selected.length}}' }} {{ "{{selected.length > 1 ? 'elementos' : 'elemento'}}" }} seleccionado(s)</div>
             <span flex=""></span>
-            <md-button class="md-icon-button" ng-show="selected.length == 1">
+            <md-button class="md-icon-button" ng-show="selected.length == 1" ng-click="editEntity()">
                 <md-tooltip>
                     Actualizar
                 </md-tooltip>

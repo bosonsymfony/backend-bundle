@@ -1,0 +1,21 @@
+{% form_theme form 'BackendBundle:Form:material_layout.html.twig' %}
+<md-dialog>
+    <md-toolbar class="md-panel-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Actualizar {{ entity }}
+            </h3>
+            <span flex=""></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i class="mdi mdi-close i-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+        {{ form(form) }}
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button class="md-primary md-raised" ng-disabled="!form.$valid" ng-click="accept()">Actualizar</md-button>
+        <md-button class="md-primary" ng-click="cancel()">Cancelar</md-button>
+    </div>
+</md-dialog>

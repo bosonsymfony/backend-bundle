@@ -6,8 +6,8 @@
                 <span class="pull-right text-muted">
                     <i class="fa fa-caret-down"></i>
                 </span>
-                <i class="icon i-20 {{ child.icon }}"></i>
-                <span class="font-normal">{{ child.title }}</span>
+                    <i class="icon i-20 {{ child.icon }}"></i>
+                    <span class="font-normal">{{ child.title }}</span>
                 </a>
                 {% if child.children is defined and child.children|length %}
                     <ul class="nav nav-sub">
@@ -43,8 +43,8 @@
                 <span class="pull-right text-muted">
                     <i class="fa fa-caret-down"></i>
                 </span>
-                <i class="icon i-20 mdi-action-settings"></i>
-                <span class="font-normal">Configuration</span>
+                    <i class="icon i-20 mdi mdi-settings"></i>
+                    <span class="font-normal">Configuration</span>
                 </a>
                 <ul class="nav nav-sub">
                     <li ui-sref-active="active">
@@ -66,3 +66,13 @@
         </ul>
     </nav>
 </md-content>
+<nav class="help-block-backend">
+    <ul class="nav">
+        <li ui-sref-active="active">
+            <a ui-sref="app.help">
+                <i class="icon mdi mdi-help-circle i-20"></i>
+                Help & FeedBack
+            </a>
+        </li>
+    </ul>
+</nav>

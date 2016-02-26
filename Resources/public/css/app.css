@@ -5055,3 +5055,9 @@ md-input-container > .md-errors-spacer {
 md-dialog .md-actions {
   border-top: 1px rgba(0, 0, 0, 0.12) solid;
 }
+.help-block-backend {
+  border-top: 1px solid #dddee0;
+}
+.help-block-backend > ul {
+  margin-top: 0;
+}
