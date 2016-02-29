@@ -14,11 +14,13 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-content class="md-panel-content" layout="row" layout-xs="column">
-        <div style="background-color: red" flex-xs="auto" flex="25">
-            dsfsdfsdfsdfdsf
+    <md-content class="md-panel-content" layout-gt-xs="row" layout="column">
+        <div flex-gt-xs="50" flex-gt-md="30">
+            <!--<abn-tree tree-data="data" class="md-tree" icon-collapse="mdi mdi-chevron-up i-20"-->
+                      <!--icon-expand="mdi mdi-chevron-down i-20" icon-leaf="mdi mdi-file-outline i-20"></abn-tree>-->
+            <tree-collection collection="data"></tree-collection>
         </div>
-        <div style="background-color: blue" flex-xs="auto" flex="75">
+        <div style="background-color: blue" flex-gt-xs="50" flex-gt-md="70">
             dsfdsfdsfsdfdsfsdf
         </div>
     </md-content>

@@ -5061,3 +5061,12 @@ md-dialog .md-actions {
 .help-block-backend > ul {
   margin-top: 0;
 }
+.md-tree {
+  margin-top: 0;
+}
+.md-tree a {
+  line-height: 32px;
+}
+.md-tree a :hover {
+  background-color: #E1E1E1;
+}

@@ -30,7 +30,8 @@ angular.module('app')
                         name: 'app.commands',
                         files: [
                             '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
-                            '{{ asset('bundles/backend/app/controllers/configuration/CommandsCtrl.js')|raw }}'
+                            '{{ asset('bundles/backend/app/controllers/configuration/CommandsCtrl.js')|raw }}',
+                            '{{ asset('bundles/backend/lib/boson-tree/boson-tree.js')|raw }}'
                         ]
                     },
                     {

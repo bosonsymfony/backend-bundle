@@ -8,6 +8,35 @@ angular.module('app')
 
                 $scope.promise = dashboard.getCommands();
 
+                $scope.data = [{
+                    label: 'Languages',
+                    children: [
+                        {
+                            label: 'Jade'
+                        },
+                        {
+                            label: 'Less'
+                        },
+                        {
+                            label: 'Coffeescript',
+                            children: [
+                                {
+                                    label: 'Jade'
+                                },
+                                {
+                                    label: 'Less'
+                                },
+                                {
+                                    label: 'Coffeescript',
+                                    onSelect: function (branch) {
+                                        console.log(branch);
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }];
+
                 $scope.promise.then(function (response) {
                     $scope.commands = response.data.commands;
                     $scope.namespaces = response.data.namespaces;
