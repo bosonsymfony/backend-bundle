@@ -27,6 +27,7 @@
     "bootstrap": "^3.3.6",
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.1",
+    "mdi": "^1.4.57",
     "oclazyload": "^1.0.9"
   }
 }

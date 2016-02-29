@@ -41,6 +41,20 @@ describe('$uibPosition service', function () {
     });
   });
 
+  describe('rawnode', function() {
+    it('returns the raw DOM element from an angular element', function() {
+      var angularEl = angular.element('<div></div>');
+      var el = $uibPosition.getRawNode(angularEl);
+      expect(el.nodeName).toBe('DIV');
+    });
+
+    it('returns the raw DOM element from a select element', function() {
+      var angularEl = angular.element('<select><option value="value">value</option></select>');
+      var el = $uibPosition.getRawNode(angularEl);
+      expect(el.nodeName).toBe('SELECT');
+    });
+  });
+
   describe('offset', function() {
     it('returns getBoundingClientRect by default', function() {
       var el = angular.element('<div>Foo</div>');
@@ -215,6 +229,27 @@ describe('$uibPosition service', function () {
         left: 3
       });
     });
+  });
+
+  describe('isScrollable', function() {
+    var el;
+
+    afterEach(function() {
+      el.remove();
+    });
+
+    it('should return true if the element is scrollable', function() {
+      el = angular.element('<div style="overflow: auto"></div>');
+      $document.find('body').append(el);
+      expect($uibPosition.isScrollable(el)).toBe(true);
+    });
+
+    it('should return false if the element is scrollable', function() {
+      el = angular.element('<div></div>');
+      $document.find('body').append(el);
+      expect($uibPosition.isScrollable(el)).toBe(false);
+    });
+
   });
 
   describe('scrollParent', function() {
