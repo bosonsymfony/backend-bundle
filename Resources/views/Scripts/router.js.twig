@@ -4,8 +4,8 @@
 
 angular.module('app')
         .run(
-                ['$rootScope', '$state', '$stateParams', 'cfpLoadingBar',
-                    function ($rootScope, $state, $stateParams, cfpLoadingBar) {
+                ['$rootScope', '$state', '$stateParams', 'cfpLoadingBar', 'toastr',
+                    function ($rootScope, $state, $stateParams, cfpLoadingBar, toastr) {
                         $rootScope.$state = $state;
                         $rootScope.$stateParams = $stateParams;
                         $rootScope.$urlAssets = '{{ asset('')|raw }}';
@@ -23,8 +23,22 @@ angular.module('app')
                                 }
                         );
 
-                        $rootScope.createNotify = function () {
-
+                        $rootScope.createNotify = function (type, message, title) {
+                            type = type.toLowerCase();
+                            switch (type) {
+                                case 'success':
+                                    toastr.success(message, title);
+                                    break;
+                                case 'error':
+                                    toastr.error(message, title);
+                                    break;
+                                case 'warning':
+                                    toastr.warning(message, title);
+                                    break;
+                                default:
+                                    toastr.info(message, title);
+                                    break;
+                            }
                         }
                     }
                 ]
@@ -91,7 +105,7 @@ angular.module('app')
                                         {#folded: true#}
                                     },
                                     controller: 'CommandsCtrl',
-                                    resolve: load('app.commands')
+                                    resolve: load(['treeControl', 'app.commands'])
                                 })
                                 .state('app.help', {
                                     url: '/help',

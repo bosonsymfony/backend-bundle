@@ -181,9 +181,7 @@ class BackendController extends Controller
         }
 
         foreach ($form->all() as $key => $child) {
-            if ($err = $this->childErrors($child)) {
-                $errors[$key] = $err;
-            }
+            $errors = array_merge($errors, $this->getAllErrorsMessages($child));
         }
         return $errors;
     }

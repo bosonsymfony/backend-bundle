@@ -14,7 +14,7 @@
             </md-button>
             <md-button class="md-icon-button" ng-click="addEntity()">
                 <md-tooltip>
-                    Insertar
+                    Adicionar
                 </md-tooltip>
                 <i class="mdi mdi-plus-circle-outline i-24"></i>
             </md-button>
@@ -40,17 +40,17 @@
         <div class="md-toolbar-tools">
             <div>{{ '{{selected.length}}' }} {{ "{{selected.length > 1 ? 'elementos' : 'elemento'}}" }} seleccionado(s)</div>
             <span flex=""></span>
-            <md-button class="md-icon-button" ng-show="selected.length == 1" ng-click="editEntity()">
-                <md-tooltip>
-                    Actualizar
-                </md-tooltip>
-                <i class="mdi mdi-sync i-24"></i>
-            </md-button>
             <md-button class="md-icon-button" ng-click="deleteSelected()">
                 <md-tooltip>
                     Eliminar
                 </md-tooltip>
                 <i class="mdi mdi-delete i-24"></i>
+            </md-button>
+            <md-button class="md-icon-button" ng-show="selected.length == 1" ng-click="editEntity()">
+                <md-tooltip>
+                    Modificar
+                </md-tooltip>
+                <i class="mdi mdi-pencil i-24"></i>
             </md-button>
         </div>
     </md-toolbar>
@@ -70,7 +70,7 @@
             <tr md-row md-select="entity" md-auto-select ng-repeat="entity in entities.data">
 {% for field in fields %}
     {% if field != 'id' %}
-        <td md-cell="" ng-bind="entity.{{ field|underscore }}"></td>
+        <td md-cell="" ng-bind="entity.{{ field }}"></td>
     {% endif %}
 {% endfor %}
         </tr>

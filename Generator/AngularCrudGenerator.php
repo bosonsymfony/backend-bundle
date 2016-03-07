@@ -364,7 +364,7 @@ class AngularCrudGenerator extends Generator
 
         $fieldMappings = $this->metadata->fieldMappings;
         $form = $this->formFactory->createNamedBuilder(strtolower($this->bundle->getName()) . '_' . $this->routeNamePrefix, 'form', $entity,array(
-            'csrf_protection' => false
+//            'csrf_protection' => false
         ));
 
         $listFields = array(

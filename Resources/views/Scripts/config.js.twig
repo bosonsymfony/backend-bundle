@@ -31,7 +31,6 @@ angular.module('app')
                         files: [
                             '{{ asset('bundles/backend/app/services/dashboard.js')|raw }}',
                             '{{ asset('bundles/backend/app/controllers/configuration/CommandsCtrl.js')|raw }}',
-                            '{{ asset('bundles/backend/lib/boson-tree/boson-tree.js')|raw }}'
                         ]
                     },
                     {
@@ -39,12 +38,20 @@ angular.module('app')
                         files: [
                             '{{ asset('bundles/backend/app/controllers/help/HelpCtrl.js')|raw }}'
                         ]
+                    },
+                    {
+                        name: 'treeControl',
+                        files: [
+                            '{{ asset('bundles/backend/node_modules/angular-tree-control/angular-tree-control.js')|raw }}',
+                            '{{ asset('bundles/backend/node_modules/angular-tree-control/css/tree-control-attribute.css')|raw }}',
+                            '{{ asset('bundles/backend/node_modules/angular-tree-control/css/tree-control.css')|raw }}',
+                        ]
                     }
                 ]
         )
         .config(
-                ['$ocLazyLoadProvider', 'MODULES', 'cfpLoadingBarProvider', '$mdThemingProvider', '$httpProvider', '$resourceProvider',
-                    function ($ocLazyLoadProvider, MODULES, cfpLoadingBarProvider, $mdThemingProvider, $httpProvider, $resourceProvider) {
+                ['$ocLazyLoadProvider', 'MODULES', 'cfpLoadingBarProvider', '$mdThemingProvider', '$httpProvider', '$resourceProvider', 'toastrConfig',
+                    function ($ocLazyLoadProvider, MODULES, cfpLoadingBarProvider, $mdThemingProvider, $httpProvider, $resourceProvider, toastrConfig) {
 
                         cfpLoadingBarProvider.includeSpinner = false;
 
@@ -52,6 +59,10 @@ angular.module('app')
                             debug: true,
                             events: false,
                             modules: MODULES
+                        });
+
+                        angular.extend(toastrConfig, {
+                            timeOut: 50000
                         });
 
                         $mdThemingProvider.theme('docs-dark', 'default')

@@ -127,8 +127,8 @@ class ArrayDescriptor
         return array(
             'name' => $command->getName(),
             'usage' => array_merge(array($command->getSynopsis()), $command->getUsages(), $command->getAliases()),
-            'description' => $command->getDescription(),
-            'help' => $command->getProcessedHelp(),
+            'description' => nl2br($command->getDescription()),
+            'help' => nl2br($command->getProcessedHelp()),
             'definition' => $this->getInputDefinitionData($command->getNativeDefinition()),
         );
     }
@@ -146,12 +146,12 @@ class ArrayDescriptor
             foreach ($namespace['commands'] as $command) {
                 $commandInstance = $this->application->find($command);
                 $commands[] = array(
-                    $command => $commandInstance->getName()
+                    'id' => $commandInstance->getName()
                 );
             }
             $result[] = array(
                 'id' => $namespace['id'],
-                'commands' => $commands
+                'children' => $commands
             );
         }
         return $result;

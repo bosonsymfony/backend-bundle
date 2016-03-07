@@ -3,44 +3,28 @@
  */
 angular.module('app')
     .controller('CommandsCtrl',
-        ['$scope', 'dashboard',
-            function ($scope, dashboard) {
+        ['$scope', 'dashboard', '$sce',
+            function ($scope, dashboard, $sce) {
 
                 $scope.promise = dashboard.getCommands();
 
-                $scope.data = [{
-                    label: 'Languages',
-                    children: [
-                        {
-                            label: 'Jade'
-                        },
-                        {
-                            label: 'Less'
-                        },
-                        {
-                            label: 'Coffeescript',
-                            children: [
-                                {
-                                    label: 'Jade'
-                                },
-                                {
-                                    label: 'Less'
-                                },
-                                {
-                                    label: 'Coffeescript',
-                                    onSelect: function (branch) {
-                                        console.log(branch);
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }];
+                $scope.showSelected = function (node) {
+                    if (!('children' in node)) {
+                        $scope.selectedCommand = $scope.commands[node.id];
+                    }
+                    console.log(node);
+                };
+
+                $scope.selectedCommand = {};
 
                 $scope.promise.then(function (response) {
                     $scope.commands = response.data.commands;
                     $scope.namespaces = response.data.namespaces;
                 });
+
+                $scope.trustAsHtml = function (value) {
+                    return $sce.trustAsHtml(value);
+                }
             }
         ]
     );

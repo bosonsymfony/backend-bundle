@@ -126,6 +126,7 @@ class {{ entity_class }}Controller extends BackendController
 
         $query = $qb->getQuery();
         $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
+        $query->setHydrationMode(Query::HYDRATE_ARRAY);
 
         $paginator = new Paginator($query);
         $count = $paginator->count();
