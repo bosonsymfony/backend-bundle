@@ -1,3 +1,45 @@
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/angular-ui/bootstrap/compare/1.2.3...v1.2.4) (2016-03-06)
+
+
+
+
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/angular-ui/bootstrap/compare/1.2.2...v1.2.3) (2016-03-06)
+
+
+### Bug Fixes
+
+* **dropdown:** correctly update isOpen ([aac0d2b](https://github.com/angular-ui/bootstrap/commit/aac0d2b)), closes [#5589](https://github.com/angular-ui/bootstrap/issues/5589) [#3261](https://github.com/angular-ui/bootstrap/issues/3261)
+* **modal:** switch to $animate ([dd62c73](https://github.com/angular-ui/bootstrap/commit/dd62c73)), closes [#5585](https://github.com/angular-ui/bootstrap/issues/5585) [#5298](https://github.com/angular-ui/bootstrap/issues/5298)
+* **position:** auto position append to body ([a516178](https://github.com/angular-ui/bootstrap/commit/a516178)), closes [#5582](https://github.com/angular-ui/bootstrap/issues/5582) [#5576](https://github.com/angular-ui/bootstrap/issues/5576)
+* **tabs:** support heading with : ([a945dd2](https://github.com/angular-ui/bootstrap/commit/a945dd2)), closes [#5590](https://github.com/angular-ui/bootstrap/issues/5590) [#5568](https://github.com/angular-ui/bootstrap/issues/5568)
+* **typeahead:** change to original scope ([7949494](https://github.com/angular-ui/bootstrap/commit/7949494)), closes [#5588](https://github.com/angular-ui/bootstrap/issues/5588) [#5467](https://github.com/angular-ui/bootstrap/issues/5467)
+* **typeahead:** update isOpen on escape ([313ba83](https://github.com/angular-ui/bootstrap/commit/313ba83)), closes [#5579](https://github.com/angular-ui/bootstrap/issues/5579) [#5587](https://github.com/angular-ui/bootstrap/issues/5587)
+
+### Features
+
+* **datepicker:** add helpers for styling ([c15dcbd](https://github.com/angular-ui/bootstrap/commit/c15dcbd)), closes [#5580](https://github.com/angular-ui/bootstrap/issues/5580)
+
+
+
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/angular-ui/bootstrap/compare/1.2.1...v1.2.2) (2016-03-03)
+
+
+### Bug Fixes
+
+* **Gruntfile:** add per module flag ([a816251](https://github.com/angular-ui/bootstrap/commit/a816251)), closes [#5567](https://github.com/angular-ui/bootstrap/issues/5567)
+* **modal:** fire ng-leave on close ([299f751](https://github.com/angular-ui/bootstrap/commit/299f751)), closes [#5556](https://github.com/angular-ui/bootstrap/issues/5556) [#5399](https://github.com/angular-ui/bootstrap/issues/5399)
+* **modal:** fix bindToController props ([5e43870](https://github.com/angular-ui/bootstrap/commit/5e43870)), closes [#5569](https://github.com/angular-ui/bootstrap/issues/5569)
+* **position:** add CSS for webpack support ([d68086f](https://github.com/angular-ui/bootstrap/commit/d68086f)), closes [#5561](https://github.com/angular-ui/bootstrap/issues/5561)
+* **rating:** fix usage of aria-valuetext ([4369800](https://github.com/angular-ui/bootstrap/commit/4369800)), closes [#5573](https://github.com/angular-ui/bootstrap/issues/5573) [#5571](https://github.com/angular-ui/bootstrap/issues/5571)
+* **tabs:** update doc and fix tab demo ([9d74d6c](https://github.com/angular-ui/bootstrap/commit/9d74d6c)), closes [#5575](https://github.com/angular-ui/bootstrap/issues/5575) [#5551](https://github.com/angular-ui/bootstrap/issues/5551)
+* **tests:** add style tag once ([cc2d1b9](https://github.com/angular-ui/bootstrap/commit/cc2d1b9)), closes [#5557](https://github.com/angular-ui/bootstrap/issues/5557) [#5548](https://github.com/angular-ui/bootstrap/issues/5548)
+* **tooltip:** import CSS ([c8922a2](https://github.com/angular-ui/bootstrap/commit/c8922a2)), closes [#5552](https://github.com/angular-ui/bootstrap/issues/5552)
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/angular-ui/bootstrap/compare/1.2.0...v1.2.1) (2016-02-27)
 
@@ -63,6 +105,8 @@ template
 * datepicker: This adds extra CSS for the datepicker for the left and right header buttons - one can override this appropriately with any selector of class priority higher than 1
 * datepicker: This breaks any snake-cased key usage, i.e.
 `show-weeks`. Convert all keys used to camelCase.
+* tab: Make the `active` attribute optional and move to `tabset` element.
+* carousel: the `active` attribute is now required on the `uib-carousel` element and a unique `index` attribute is required on each `uib-slide` element.
 
 
 

@@ -1,64 +1,80 @@
-.badge, 
-.label{
-  font-weight: bold; 
+.badge,
+.label {
+  font-weight: bold;
   background-color: @badge-bg;
 }
-.badge.bg-light, 
+
+.badge.bg-light,
 .badge.bg-white,
 .label.bg-light,
-.label.bg-white{
-  text-shadow:none;
+.label.bg-white {
+  text-shadow: none;
   color: @text-color;
 }
 
-.label{
+.label {
   padding: 0.35em .6em;
 }
 
-.badge{
-  padding: 3px 6px;  
-  &.up{
+.badge {
+  padding: 3px 6px;
+  &.up {
     position: relative;
     top: -10px;
     margin: 0 -0.5em;
   }
 }
 
-.badge-lg{
+.badge-lg {
   border-radius: 20px;
   font-size: @font-size-md;
   padding: 5px 9px;
 }
 
-.badge-sm{
+.badge-sm {
   padding: 2px 5px;
 }
 
-.badge-xs{
+.badge-xs {
   padding: 1px 4px;
 }
 
-.label-lg{
+.label-lg {
   font-size: @font-size-md;
   padding: 5px 9px;
 }
 
-.label-sm{
+.label-sm {
   padding: 2px 5px;
 }
 
-.label-xs{
+.label-xs {
   padding: 1px 4px;
 }
 
 .badge-white {
   background-color: transparent;
-  border: 1px solid rgba(255,255,255,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 2px 6px;
 }
 
 .badge-black {
   background-color: transparent;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   color: inherit;
+}
+
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 10px;
 }
