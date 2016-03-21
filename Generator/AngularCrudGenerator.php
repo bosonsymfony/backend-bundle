@@ -363,8 +363,7 @@ class AngularCrudGenerator extends Generator
         $propertyAccessor = new PropertyAccessor(false, true);
 
         $fieldMappings = $this->metadata->fieldMappings;
-        $form = $this->formFactory->createNamedBuilder(strtolower($this->bundle->getName()) . '_' . $this->routeNamePrefix, 'form', $entity,array(
-//            'csrf_protection' => false
+        $form = $this->formFactory->createNamedBuilder(strtolower($this->bundle->getName()) . '_' . $this->routeNamePrefix, 'form', $entity, array(//            'csrf_protection' => false
         ));
 
         $listFields = array(
@@ -408,7 +407,7 @@ class AngularCrudGenerator extends Generator
                     $data['menu'][$key]['children'] = array();
                 }
                 $data['menu'][$key]['children'][strtolower($this->entity)] = array(
-                    'title' => $this->entity,
+                    'title' => Util::transformTitle($this->entity),
                     'type' => 'link',
                     'state' => $value['includes'] . '.' . strtolower($this->entity)
                 );

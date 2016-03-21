@@ -44,7 +44,9 @@
      */
     private function createCreateForm({{ entity_class }} $entity)
     {
-        $form = $this->get('form.factory')->createNamedBuilder('{{ bundle|lower }}_{{ route_name_prefix }}', 'form', $entity, array('csrf_protection'   => false));
+        $form = $this->get('form.factory')->createNamedBuilder('{{ bundle|lower }}_{{ route_name_prefix }}', 'form', $entity, array(
+            //'csrf_protection'   => false
+        ));
 
         foreach ($this->newFormFields as $index => $newFormField) {
             $form->add($newFormField);

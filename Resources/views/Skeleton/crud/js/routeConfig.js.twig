@@ -3,7 +3,7 @@
     templateUrl: {{ "'{{ asset('bundles/"}}{{ target_dir }}{{ "/adminApp/views/"}}{{ entity }}{{ "/list.html')|raw }}'" }},
     controller: '{{ filename }}Ctrl',
     data: {
-        title: '{{ entity }}'
+        title: '{{ entity|transform_title }}'
     },
     resolve: load(
             [

@@ -51,7 +51,7 @@
     private function createEditForm({{ entity_class }} $entity)
     {
         $form = $this->get('form.factory')->createNamedBuilder('{{ bundle|lower }}_{{ route_name_prefix }}', 'form', $entity, array(
-            'csrf_protection' => false
+            //'csrf_protection' => false
         ));
         foreach ($this->editFormFields as $index => $editFormField) {
             $form->add($editFormField);

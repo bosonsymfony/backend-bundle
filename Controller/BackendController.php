@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Response;
+use UCI\Boson\SeguridadBundle\Controller\AutenticableController;
 
 class BackendController extends Controller
 {

@@ -3,9 +3,9 @@
         {% if child.type == 'toggle' %}
             <li ng-class="{active:$state.includes('{{ child.includes }}')}">
                 <a md-ink-ripple>
-                <span class="pull-right text-muted">
-                    <i class="fa fa-caret-down"></i>
-                </span>
+                    <span class="pull-right text-muted">
+                        <i class="fa fa-caret-down"></i>
+                    </span>
                     <i class="icon i-20 {{ child.icon }}"></i>
                     <span class="font-normal">{{ child.title }}</span>
                 </a>
@@ -16,8 +16,14 @@
                 {% endif %}
             </li>
         {% elseif child.type == 'link' %}
-            <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="{{ child.state }}">{{ child.title }}</a>
+            <li {% if 'includes' not in child|keys %}ui-sref-active="active"{% endif %}
+                {% if 'includes' in child|keys %}ng-class="{active:$state.includes('{{ child.includes }}')}"{% endif %}>
+                <a md-ink-ripple ui-sref="{{ child.state }}">
+                    {% if 'icon' in child|keys %}
+                        <i class="icon i-20 {{ child.icon }}"></i>
+                    {% endif %}
+                    {{ child.title }}
+                </a>
             </li>
         {% endif %}
     {% endfor %}

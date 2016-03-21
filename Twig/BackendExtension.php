@@ -10,6 +10,7 @@ namespace UCI\Boson\BackendBundle\Twig;
 
 
 use Symfony\Component\DependencyInjection\Container;
+use UCI\Boson\BackendBundle\Command\Util;
 
 class BackendExtension extends \Twig_Extension
 {
@@ -19,8 +20,26 @@ class BackendExtension extends \Twig_Extension
             new \Twig_SimpleFilter('underscore', array($this, 'underscore')),
             new \Twig_SimpleFilter('space_separator', array($this, 'spaceSeparator')),
             new \Twig_SimpleFilter('starts_with', array($this, 'startsWith')),
-            new \Twig_SimpleFilter('ends_with', array($this, 'endsWith'))
+            new \Twig_SimpleFilter('ends_with', array($this, 'endsWith')),
+            new \Twig_SimpleFilter('lcfirst', array($this, 'lcfirst')),
+            new \Twig_SimpleFilter('ucfirst', array($this, 'ucfirst')),
+            new \Twig_SimpleFilter('transform_title', array($this, 'transformTitle')),
         );
+    }
+
+    public function lcfirst($string)
+    {
+        return lcfirst($string);
+    }
+
+    public function ucfirst($string)
+    {
+        return ucfirst($string);
+    }
+
+    public function transformTitle($string)
+    {
+        return Util::transformTitle($string);
     }
 
     /**
