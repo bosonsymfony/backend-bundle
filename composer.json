@@ -1,0 +1,33 @@
+{
+    "name": "boson/backend-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Paquete de administración de Boson",
+    "authors": [
+        {
+            "name": "Julio César Ocaña Bermudez",
+            "email": "jcocana@uci.cu"
+        }
+    ], "autoload": {
+    "psr-0": {"UCI\\Boson\\BackendBundle": ""}
+},
+    "target-dir": "UCI/Boson/BackendBundle",
+    "require": {
+        "symfony/symfony": "~2.7.0",
+        "friendsofsymfony/jsrouting-bundle": "~1.6.0",
+        "jms/serializer": "~1.1.0"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master-dev",
+            "dev-b2.3":   "1.0.x-dev",
+            "dev-b2.7":   "1.1.x-dev"
+        }
+    },
+    "config":{
+        "platform": {
+            "php": ">=5.4"
+        }
+    }
+}
