@@ -20,4 +20,13 @@ class Util
         return preg_replace('/bundle$/', '', strtolower($bundle));
     }
 
+    static function transformTitle($string)
+    {
+        $vowels = array("a", "e", "i", "o", "u");
+        $last = substr($string, -1);
+        $ended = (in_array($last, $vowels)) ? "s" : "es";
+
+        return $string . $ended;
+    }
+
 }
