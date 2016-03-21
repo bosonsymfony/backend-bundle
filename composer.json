@@ -14,7 +14,7 @@
     "target-dir": "UCI/Boson/BackendBundle",
     "require": {
         "symfony/symfony": "~2.7.0",
-        "friendsofsymfony/jsrouting-bundle": "~1.6.0",
+        "friendsofsymfony/jsrouting-bundle": "~1.5.4",
         "jms/serializer": "~1.1.0"
     },
     "minimum-stability": "dev",
