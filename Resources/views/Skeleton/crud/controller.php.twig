@@ -107,7 +107,7 @@ class {{ entity_class }}Controller extends BackendController
         $qb
             ->select($selectFields)
             ->from('{{ bundle }}:{{ entity }}', '{{ entity }}')
-            ->orderBy('{{ entity }}.' . $order, $direction)
+            ->orderBy((strpos($order, '.') !== false) ? $order : "{{ entity }}.$order", $direction)
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit);
 

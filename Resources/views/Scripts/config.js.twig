@@ -53,7 +53,26 @@ angular.module('app')
                 ['$ocLazyLoadProvider', 'MODULES', 'cfpLoadingBarProvider', '$mdThemingProvider', '$httpProvider', '$resourceProvider', 'toastrConfig',
                     function ($ocLazyLoadProvider, MODULES, cfpLoadingBarProvider, $mdThemingProvider, $httpProvider, $resourceProvider, toastrConfig) {
 
-                        cfpLoadingBarProvider.includeSpinner = false;
+                        cfpLoadingBarProvider.includeSpinner = true;
+                        cfpLoadingBarProvider.includeBar = true;
+                        cfpLoadingBarProvider.spinnerTemplate =
+                                '<div class="backend-loading">' +
+                                '<md-progress-circular style="width: 100px; height: 100px;" class="ng-scope" role="progressbar" aria-valuemax="100" aria-valuemin="0" md-mode="indeterminate" md-diameter="100">' +
+                                '<div style="transform: translate(-50%, -50%) scale(1);" class="md-scale-wrapper md-mode-indeterminate">' +
+                                '<div class="md-spinner-wrapper">' +
+                                '<div class="md-inner">' +
+                                '<div class="md-gap"></div>' +
+                                '<div class="md-left">' +
+                                '<div class="md-half-circle"></div>' +
+                                '</div>' +
+                                '<div class="md-right">' +
+                                '<div class="md-half-circle"></div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</md-progress-circular>' +
+                                '</div>';
 
                         $ocLazyLoadProvider.config({
                             debug: true,
@@ -61,9 +80,9 @@ angular.module('app')
                             modules: MODULES
                         });
 
-                        angular.extend(toastrConfig, {
-                            timeOut: 50000
-                        });
+                        {#angular.extend(toastrConfig, {#}
+                        {#timeOut: 50000#}
+                        {#});#}
 
                         $mdThemingProvider.theme('docs-dark', 'default')
                                 .primaryPalette('yellow')

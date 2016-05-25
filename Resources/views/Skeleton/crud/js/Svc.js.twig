@@ -9,6 +9,9 @@ angular.module('app')
                             entities: $resource(Routing.generate('{{ route_name_prefix }}_create', {}, true) + ':id', null, {
                                 'query': {
                                     isArray: false
+                                },
+                                'get': {
+                                    ignoreLoadingBar: true
                                 }
                             })
                         };

@@ -15,7 +15,7 @@ angular.module('ui.bootstrap.carousel', [])
       element: element
     });
     slides.sort(function(a, b) {
-      return +a.slide.index > +b.slide.index;
+      return +a.slide.index - +b.slide.index;
     });
     //if this is the first slide or the slide is set to active, select it
     if (slide.index === $scope.active || slides.length === 1 && !angular.isNumber($scope.active)) {
@@ -123,6 +123,14 @@ angular.module('ui.bootstrap.carousel', [])
     return $scope.active === slide.slide.index;
   };
 
+  $scope.isPrevDisabled = function() {
+    return $scope.active === 0 && $scope.noWrap();
+  };
+
+  $scope.isNextDisabled = function() {
+    return $scope.active === slides.length - 1 && $scope.noWrap();
+  };
+
   $scope.pause = function() {
     if (!$scope.noPause) {
       isPlaying = false;
@@ -161,9 +169,9 @@ angular.module('ui.bootstrap.carousel', [])
 
       var slide = slides[index];
       if (slide) {
-        currentIndex = index;
         setActive(index);
         self.select(slides[index]);
+        currentIndex = index;
       }
     }
   });

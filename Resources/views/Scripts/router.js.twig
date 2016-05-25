@@ -11,17 +11,17 @@ angular.module('app')
                         $rootScope.$urlAssets = '{{ asset('')|raw }}';
                         $rootScope.$appName = 'Boson';
 
-                        $rootScope.$on('$stateChangeStart',
-                                function (event, toState, toParams, fromState, fromParams) {
-                                    cfpLoadingBar.start();
-                                }
-                        );
+                        {#$rootScope.$on('$stateChangeStart',#}
+                                {#function (event, toState, toParams, fromState, fromParams) {#}
+                                    {#cfpLoadingBar.start();#}
+                                {#}#}
+                        {#);#}
 
-                        $rootScope.$on('$stateChangeSuccess',
-                                function (event, toState, toParams, fromState, fromParams) {
-                                    cfpLoadingBar.complete();
-                                }
-                        );
+                        {#$rootScope.$on('$stateChangeSuccess',#}
+                                {#function (event, toState, toParams, fromState, fromParams) {#}
+                                    {#cfpLoadingBar.complete();#}
+                                {#}#}
+                        {#);#}
 
                         $rootScope.createNotify = function (type, message, title) {
                             type = type.toLowerCase();

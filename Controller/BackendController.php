@@ -9,11 +9,9 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Response;
-use UCI\Boson\SeguridadBundle\Controller\AutenticableController;
 
 class BackendController extends Controller
 {
-
     public function serialize($data, $format = 'json')
     {
         $serializer = $this->get('jms_serializer');
