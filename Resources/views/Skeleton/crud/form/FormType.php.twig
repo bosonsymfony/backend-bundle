@@ -1,0 +1,59 @@
+<?php
+
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+{% block use_statements %}
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+{% endblock use_statements %}
+
+{% block class_definition %}
+class {{ entity_class }}Type extends AbstractType
+{% endblock class_definition %}
+{
+{% block class_body %}
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            // fields
+        {%- for field in field_list.fields %}
+            {% if field != 'id' %}
+
+            ->add('{{ field }}')
+            {% endif %}
+        {%- endfor %}
+
+            // associations
+        {%- for key, association in field_list.associations %}
+
+            ->add('{{ key }}')
+        {%- endfor %}
+
+        ;
+}
+
+    /**
+    * @param OptionsResolverInterface $resolver
+    */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
+        ));
+    }
+
+    /**
+    * @return string
+    */
+    public function getName()
+    {
+        return '{{ bundle|lower }}_{{ route_name_prefix }}';
+    }
+{% endblock class_body %}
+}

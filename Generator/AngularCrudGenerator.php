@@ -114,6 +114,12 @@ class AngularCrudGenerator extends Generator
     }
 
 
+    /**
+     * @param BundleInterface $bundle
+     * @param $entity
+     * @param $format
+     * @param $routePrefix
+     */
     public function generate(BundleInterface $bundle, $entity, $format, $routePrefix)
     {
         $this->entity = $entity;
@@ -133,6 +139,8 @@ class AngularCrudGenerator extends Generator
         $this->setSkeletonDirs(__DIR__ . '/../Resources/skeleton');
 
         $this->generateControllerClass(true);
+
+        $this->generateFormClass(true);
 
         // Generate list
         $dir = sprintf('%s/Resources/public/adminApp/views/%s', $this->bundle->getPath(), str_replace('\\', '/', $this->entity));
@@ -215,6 +223,44 @@ class AngularCrudGenerator extends Generator
         }
 
         $this->renderFile('BackendBundle:Skeleton:crud/controller.php.twig', $target, array(
+            'route_prefix' => $this->routePrefix,
+            'route_name_prefix' => $this->routeNamePrefix,
+            'bundle' => $this->bundle->getName(),
+            'entity' => $this->entity,
+            'entity_class' => $entityClass,
+            'namespace' => $this->bundle->getNamespace(),
+            'entity_namespace' => $entityNamespace,
+            'format' => $this->format,
+            'field_list' => $this->fieldList,
+            'search_field' => $this->searchField
+        ));
+    }
+
+    /**
+     * Generates the form class only
+     *
+     * @param $forceOverwrite
+     */
+    protected function generateFormClass($forceOverwrite)
+    {
+        $dir = $this->bundle->getPath();
+
+        $parts = explode('\\', $this->entity);
+        $entityClass = array_pop($parts);
+        $entityNamespace = implode('\\', $parts);
+
+        $target = sprintf(
+            '%s/Form/%s/%sType.php',
+            $dir,
+            str_replace('\\', '/', $entityNamespace),
+            $entityClass
+        );
+
+        if (!$forceOverwrite && file_exists($target)) {
+            throw new \RuntimeException('Unable to generate the controller as it already exists.');
+        }
+
+        $this->renderFile('BackendBundle:Skeleton:crud/form/FormType.php.twig', $target, array(
             'route_prefix' => $this->routePrefix,
             'route_name_prefix' => $this->routeNamePrefix,
             'bundle' => $this->bundle->getName(),

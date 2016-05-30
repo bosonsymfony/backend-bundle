@@ -50,16 +50,12 @@
     */
     private function createEditForm({{ entity_class }} $entity)
     {
-        $form = $this->get('form.factory')->createNamedBuilder('{{ bundle|lower }}_{{ route_name_prefix }}', 'form', $entity, array(
-            //'csrf_protection' => false
+        $form = $this->createForm(new {{ entity_class }}Type(), $entity, array(
+            'action' => $this->generateUrl('{{ route_name_prefix }}_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
         ));
-        foreach ($this->editFormFields as $index => $editFormField) {
-            $form->add($editFormField);
-        }
 
-        $form->setMethod('PUT');
-
-        return $form->getForm();
+        return $form;
     }
 {% endblock form %}
 

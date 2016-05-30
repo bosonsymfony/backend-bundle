@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use UCI\Boson\BackendBundle\Controller\BackendController;
 use {{ namespace }}\Entity\{{ entity }};
-{#use {{ namespace }}\Form\{{ entity }}Type;#}
+use {{ namespace }}\Form\{{ entity }}Type;
 {% endblock use_statements %}
 
 /**
@@ -60,22 +60,6 @@ class {{ entity_class }}Controller extends BackendController
 {% for key,field in search_field %}
 {% if key != 'id' %}
         '{{ key }}' => '{{ field.type }}',
-{% endif %}
-{% endfor %}
-    );
-
-    private $newFormFields = array(
-{% for field in field_list.fields %}
-{% if field != 'id' %}
-        '{{ field }}',
-{% endif %}
-{% endfor %}
-    );
-
-    private $editFormFields = array(
-{% for field in field_list.fields %}
-{% if field != 'id' %}
-        '{{ field }}',
 {% endif %}
 {% endfor %}
     );

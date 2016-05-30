@@ -44,15 +44,11 @@
      */
     private function createCreateForm({{ entity_class }} $entity)
     {
-        $form = $this->get('form.factory')->createNamedBuilder('{{ bundle|lower }}_{{ route_name_prefix }}', 'form', $entity, array(
-            //'csrf_protection'   => false
+        $form = $this->createForm(new {{ entity_class }}Type(), $entity, array(
+            'action' => $this->generateUrl('{{ route_name_prefix }}_create'),
+            'method' => 'POST',
         ));
 
-        foreach ($this->newFormFields as $index => $newFormField) {
-            $form->add($newFormField);
-        }
-        $form->setAction($this->generateUrl('{{ route_name_prefix }}_create'));
-
-        return $form->getForm();
+        return $form;
     }
 {% endblock form %}
