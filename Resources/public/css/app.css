@@ -6345,3 +6345,11 @@ treecontrol {
     top: calc(50% - 40px);
     bottom: calc(50% - 40px);
 }
+
+md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder {
+    color: rgba(0, 0, 0, 0.50);
+}
+
+md-input-container.md-default-theme .md-input, md-input-container .md-input {
+    border-color: rgba(0,0,0,0.20);
+}
