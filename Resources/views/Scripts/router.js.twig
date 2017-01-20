@@ -10,17 +10,22 @@ angular.module('app')
                         $rootScope.$stateParams = $stateParams;
                         $rootScope.$urlAssets = '{{ asset('')|raw }}';
                         $rootScope.$appName = 'Boson';
+                        $rootScope.$labelPagination = {
+                            page: '{{ 'pagination.page'|trans({},'DataTable') }}',
+                            rowsPerPage: '{{ 'pagination.rowsPerPage'|trans({},'DataTable') }}',
+                            of: '{{ 'pagination.of'|trans({},'DataTable') }}'
+                        };
 
                         {#$rootScope.$on('$stateChangeStart',#}
-                                {#function (event, toState, toParams, fromState, fromParams) {#}
-                                    {#cfpLoadingBar.start();#}
-                                {#}#}
+                        {#function (event, toState, toParams, fromState, fromParams) {#}
+                        {#cfpLoadingBar.start();#}
+                        {#}#}
                         {#);#}
 
                         {#$rootScope.$on('$stateChangeSuccess',#}
-                                {#function (event, toState, toParams, fromState, fromParams) {#}
-                                    {#cfpLoadingBar.complete();#}
-                                {#}#}
+                        {#function (event, toState, toParams, fromState, fromParams) {#}
+                        {#cfpLoadingBar.complete();#}
+                        {#}#}
                         {#);#}
 
                         $rootScope.createNotify = function (type, message, title) {

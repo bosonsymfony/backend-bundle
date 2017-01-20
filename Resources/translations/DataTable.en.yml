@@ -1,0 +1,4 @@
+pagination:
+    page: Page:
+    rowsPerPage:  Rows per page:
+    of: of
