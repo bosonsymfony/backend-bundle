@@ -17,7 +17,7 @@
             </li>
         {% elseif child.type == 'link' %}
             <li {% if 'includes' not in child|keys %}ui-sref-active="active"{% endif %}
-                {% if 'includes' in child|keys %}ng-class="{active:$state.includes('{{ child.includes }}')}"{% endif %}>
+                    {% if 'includes' in child|keys %}ng-class="{active:$state.includes('{{ child.includes }}')}"{% endif %}>
                 <a md-ink-ripple ui-sref="{{ child.state }}">
                     {% if 'icon' in child|keys %}
                         <i class="icon i-20 {{ child.icon }}"></i>
@@ -50,20 +50,20 @@
                     <i class="fa fa-caret-down"></i>
                 </span>
                     <i class="icon i-20 mdi mdi-settings"></i>
-                    <span class="font-normal">Configuration</span>
+                    <span class="font-normal">{{ 'menu.config'|trans }}</span>
                 </a>
                 <ul class="nav nav-sub">
                     <li ui-sref-active="active">
-                        <a md-ink-ripple ui-sref="app.bundles">Enabled Bundles</a>
+                        <a md-ink-ripple ui-sref="app.bundles">{{ 'menu.bundles'|trans }}</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a md-ink-ripple ui-sref="app.routes">Routing</a>
+                        <a md-ink-ripple ui-sref="app.routes">{{ 'menu.routes'|trans }}</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a md-ink-ripple ui-sref="app.database">Database</a>
+                        <a md-ink-ripple ui-sref="app.database">{{ 'menu.database'|trans }}</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a md-ink-ripple ui-sref="app.commands">Commands</a>
+                        <a md-ink-ripple ui-sref="app.commands">{{ 'menu.commands'|trans }}</a>
                     </li>
                 </ul>
             </li>
@@ -75,10 +75,11 @@
 <nav class="help-block-backend">
     <ul class="nav">
         <li ui-sref-active="active">
-            <a ui-sref="app.help">
-                <i class="icon mdi mdi-help-circle i-20"></i>
-                Help & FeedBack
-            </a>
+            {#<a>#}
+                {#<i class="icon mdi mdi-help-circle i-20"></i>#}
+                {#Help & FeedBack#}
+                &nbsp;
+            {#</a>#}
         </li>
     </ul>
 </nav>

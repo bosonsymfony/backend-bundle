@@ -76,7 +76,7 @@ angular.module('app')
                                     url: '/bundles',
                                     templateUrl: '{{ asset('bundles/backend/app/views/pages/config.bundles.html')|raw }}',
                                     data: {
-                                        title: 'Enabled Bundles',
+                                        title: '{{ 'menu.bundles'|trans }}',
                                         {#folded: true#}
                                     },
                                     controller: 'BundlesCtrl',
@@ -86,7 +86,7 @@ angular.module('app')
                                     url: '/routes',
                                     templateUrl: '{{ asset('bundles/backend/app/views/pages/config.routes.html')|raw }}',
                                     data: {
-                                        title: 'Routing',
+                                        title: '{{ 'menu.routes'|trans }}',
                                         {#folded: true#}
                                     },
                                     controller: 'RoutesCtrl',
@@ -96,7 +96,7 @@ angular.module('app')
                                     url: '/database',
                                     templateUrl: '{{ asset('bundles/backend/app/views/pages/config.database.html')|raw }}',
                                     data: {
-                                        title: 'Database',
+                                        title: '{{ 'menu.database'|trans }}',
                                         {#folded: true#}
                                     },
                                     controller: 'DatabaseCtrl',
@@ -106,7 +106,7 @@ angular.module('app')
                                     url: '/commands',
                                     templateUrl: '{{ asset('bundles/backend/app/views/pages/config.commands.html')|raw }}',
                                     data: {
-                                        title: 'Commands',
+                                        title: '{{ 'menu.commands'|trans }}',
                                         {#folded: true#}
                                     },
                                     controller: 'CommandsCtrl',
