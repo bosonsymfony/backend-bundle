@@ -1,0 +1,6 @@
+menu:
+    config:   Configuración
+    bundles:  Bundles habilitados
+    routes:   Rutas
+    database: Base de Datos
+    commands: Comandos
